@@ -1,0 +1,49 @@
+package problem1;
+
+import java.util.*;
+
+public class Problem1 {
+
+	static int A = 0;
+	static int B = 0;
+	static int C = 0;
+	
+	static int p = 0;
+	static int q = 0;
+	private static Scanner sc;
+	
+	public static void main(String[] args) {
+
+		sc = new Scanner(System.in);
+		System.out.print("Please enter the 'A' of your quadratic equation: ");
+		A = Integer.parseInt(sc.next());
+		
+		System.out.print("Please enter the 'B' of your quadratic equation: ");
+		B = Integer.parseInt(sc.next());
+				
+		System.out.print("Please enter the 'C' of your quadratic equation: ");
+		C = Integer.parseInt(sc.next());
+		
+		int discriminant =  (B*B)-(4*A*C);
+		
+		if (discriminant > 0) {
+			p = (int) ((-B + Math.sqrt(discriminant))/(2*A));
+			q = (int) ((-B - Math.sqrt(discriminant))/(2*A));
+			System.out.print("\nThe roots are: " + p + " and " + q);
+		}
+		
+		
+		else if (discriminant == 0) {
+			p = (int) ((-B)/(2*A));
+			System.out.print("\nThe root is: " + p);
+		}
+		
+		else {
+			String imaginary1 = ("(" + (-B) + " + i*sqrt(" + -discriminant + "))" + " / " + 2*A);
+			String imaginary2 = ("(" + (-B) + " - i*sqrt(" + -discriminant + "))" + " / " + 2*A);
+			System.out.print("\nThe roots are: \n" + imaginary1 + "\n" + imaginary2);
+		}
+
+	}
+
+}
