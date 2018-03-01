@@ -4,27 +4,29 @@ import java.util.*;
 
 public class Problem1 {
 
+	//Define Static variables for quad. Equation
 	static int A = 0;
 	static int B = 0;
 	static int C = 0;
 	
 	static int p = 0;
 	static int q = 0;
-	private static Scanner sc;
+	private static Scanner sc; //Scanner for input
 	
 	public static void main(String[] args) {
-
+		
+		//Request User input
 		sc = new Scanner(System.in);
 		System.out.print("Please enter the 'A' of your quadratic equation: ");
-		A = Integer.parseInt(sc.next());
+		A = Integer.parseInt(sc.next());		//To next Variable
 		
 		System.out.print("Please enter the 'B' of your quadratic equation: ");
-		B = Integer.parseInt(sc.next());
+		B = Integer.parseInt(sc.next());		//To next Variable
 				
 		System.out.print("Please enter the 'C' of your quadratic equation: ");
-		C = Integer.parseInt(sc.next());
+		C = Integer.parseInt(sc.next());		//To next Variable
 		
-		int discriminant =  (B*B)-(4*A*C);
+		int discriminant =  (B*B)-(4*A*C); `		//Define Discriminant
 		
 		if (discriminant > 0) {
 			p = (int) ((-B + Math.sqrt(discriminant))/(2*A));
