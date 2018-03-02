@@ -57,12 +57,12 @@ public class Haystack{
         System.out.println("Enter a new Needle or n To continue");
         input = scanIn.nextLine();
         
-        while(input != "n"){
+        while(input != "/n"){
             
             String newStr = "";
             newStr = input;
             System.out.println("Number of Occurances: " + countWords(str,newStr)+ "\n");
-            System.out.println("Enter a new Needle or n To continue");
+            System.out.println("Enter a new Needle or /n To continue");
             scanIn.nextLine();
             input.toLowerCase();
             
