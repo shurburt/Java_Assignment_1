@@ -1,0 +1,116 @@
+package problem5;
+
+public class problem5 {
+
+	public static class Node{
+		  int data;
+		  Node next = null;
+		  
+		  public Node() {
+			  next = null;
+			  data = 0;
+		  }
+		  
+		  public Node(int d, Node n) {
+			  data = d;
+			  next = n;
+		  }
+		   
+		}
+	
+	public static class linkedList {
+		Node head;
+		Node tail;
+		int length;
+		
+		public linkedList() {
+			head = null;
+			tail = null;
+			length = 0;
+		}
+		
+		public linkedList reverseList(linkedList original) {
+			linkedList reversedList = new linkedList();
+			reversedList.length = original.length;
+			Node container = original.head;
+			reversedList.insertAtStart(container.data);
+			container = original.head.next;
+			
+			while (container.next != null) {
+				reversedList.insertAtStart(container.data);
+				container = container.next;
+			}
+			reversedList.insertAtStart(container.data);
+			
+			return reversedList;
+		}
+		
+		public void insertAtStart(int temp) {
+				Node newPointer = new Node(temp, null);    
+		        length++ ;   
+		        
+		        if(head == null) {
+		        		head = newPointer;
+		            tail = head;
+		        }
+		        
+		        else {
+		        		newPointer.next = head;
+		        		head = newPointer;
+		        }
+		    
+		}
+		
+		public linkedList(int...n) {
+			for (int data : n) {
+				Node newPointer = new Node(data, null);    
+		        length++ ;   
+		        
+		        if(head == null) {
+		        		head = newPointer;
+		            tail = head;
+		        }
+		        
+		        else {
+		        		tail.next = newPointer;
+		        		tail = newPointer;
+		        }
+		    }
+		}
+		
+		public void display() {
+			
+			if (length == 0) {
+				System.out.print("\nLinked List is empty! :(\n");
+				return;
+			}
+			
+			if (length == 1) {
+				System.out.print(head.data);
+				return;
+			}
+			
+			Node temp = head;
+			System.out.print(head.data + "->");
+			temp = head.next;
+			
+			while (temp.next != null) {
+				System.out.print(temp.data + "->");
+				temp = temp.next;
+			}
+			System.out.print(temp.data + "\n");
+			
+			
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		linkedList test = new linkedList(1, 2, 3, 4, 5, 6);
+		test.display();
+		linkedList reversed = test.reverseList(test);
+		reversed.display();
+	}
+	
+	
+}
