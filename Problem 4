@@ -1,0 +1,59 @@
+public class Problem4 {
+	
+	// Sort using a simple Bubble Sort algorithm, can take any size array of integers
+	public static void bubblesort(int array[]) {
+		
+		// Create new array based on length of original
+		// New array holds the position of original numbers
+		int[] position = new int[array.length];
+		for (int i = 0; i < array.length; ++i) {
+			position[i] = i + 1;
+			
+		}
+		
+		// Sort original array using Bubble Sort
+		// Swap positions alongside Bubble Sort
+		for (int i = 0; i < array.length - 1; i++) {
+			for (int j = 0; j < array.length - 1 - i; j++) {
+				if (array[j] > array[j+1]) {
+					int temp = array[j];
+					int positionTemp = position[j];
+					
+					array[j] = array[j+1];
+					position[j] = position[j+1];
+					
+					array[j+1] = temp;
+					position[j+1] = positionTemp;
+				}
+			}
+		}
+		
+		// Print both arrays out
+		System.out.print("Sorted Array: ");
+		for (int i = 0; i < array.length; ++i) {
+			System.out.print(array[i] + ", ");
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("Original Positions: ");
+		for (int i = 0; i < position.length; ++i) {
+			System.out.print(position[i] + ", ");
+		}
+		
+		System.out.print("\n\n");
+	}
+	
+	
+	
+	public static void main(String[] args) {
+
+		int array[] = {5, 234, 234, 4567, 123, 568, 123, 7, 4, 2, 7}; 
+		bubblesort(array);
+		
+		int array2[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+		bubblesort(array2);
+		
+	}
+	
+}
