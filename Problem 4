@@ -7,7 +7,7 @@ public class Problem4 {
 		// New array holds the position of original numbers
 		int[] position = new int[array.length];
 		for (int i = 0; i < array.length; ++i) {
-			position[i] = i + 1;
+			position[i] = i;
 			
 		}
 		
@@ -52,8 +52,7 @@ public class Problem4 {
 		bubblesort(array);
 		
 		int array2[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-		bubblesort(array2);
-		
+		bubblesort(array2);	
 	}
 	
 }
