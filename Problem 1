@@ -1,48 +1,70 @@
-package problem1;
-
 import java.util.*;
 
 public class Problem1 {
 
-	//Define Static variables for quad. Equation
 	static int A = 0;
 	static int B = 0;
 	static int C = 0;
 	
-	static int p = 0;
-	static int q = 0;
-	private static Scanner sc; //Scanner for input
+	static double p = 0.0;
+	static double q = 0.0;
+	private static Scanner sc;
+	
+	public static int test(Object value) {
+		if (value instanceof Integer) {
+			return 1;
+		}
+		else
+			return 0;
+	}
+	
+	public static boolean stupidTest(double p, double q) {
+		
+		
+		
+		
+		return false;
+	}
 	
 	public static void main(String[] args) {
-		
-		//Request User input
+
 		sc = new Scanner(System.in);
 		System.out.print("Please enter the 'A' of your quadratic equation: ");
-		A = Integer.parseInt(sc.next());		//To next Variable
+		A = Integer.parseInt(sc.next());
 		
 		System.out.print("Please enter the 'B' of your quadratic equation: ");
-		B = Integer.parseInt(sc.next());		//To next Variable
+		B = Integer.parseInt(sc.next());
 				
 		System.out.print("Please enter the 'C' of your quadratic equation: ");
-		C = Integer.parseInt(sc.next());		//To next Variable
+		C = Integer.parseInt(sc.next());
 		
-		int discriminant =  (B*B)-(4*A*C); `		//Define Discriminant
+		int determinant =  (B*B)-(4*A*C);
+		double determinantCheck = Math.sqrt(determinant);
 		
-		if (discriminant > 0) {
-			p = (int) ((-B + Math.sqrt(discriminant))/(2*A));
-			q = (int) ((-B - Math.sqrt(discriminant))/(2*A));
-			System.out.print("\nThe roots are: " + p + " and " + q);
+		
+		if (determinant > 0) {
+			if(test(determinantCheck) == 1) {
+				p = (double) ((-B + Math.sqrt(determinant))/(2*A));
+				q = (double) ((-B - Math.sqrt(determinant))/(2*A));
+				System.out.print("\nThe roots are: " + p + " and " + q);
+			}
+			String test1 = (("(" + (-B) + " + sqrt(" + determinant + "))" + " / " + 2*A));
+			String test2 = ("(" + (-B) + " - sqrt(" + determinant + "))" + " / " + 2*A);
+			System.out.print("\nThe roots are: \n" + test1 + "\n" + test2);
+			
 		}
 		
+
 		
-		else if (discriminant == 0) {
+		
+		else if (determinant == 0) {
 			p = (int) ((-B)/(2*A));
 			System.out.print("\nThe root is: " + p);
 		}
 		
 		else {
-			String imaginary1 = ("(" + (-B) + " + i*sqrt(" + -discriminant + "))" + " / " + 2*A);
-			String imaginary2 = ("(" + (-B) + " - i*sqrt(" + -discriminant + "))" + " / " + 2*A);
+			String imaginary1 = ("(" + (-B) + " + i*sqrt(" + -determinant + "))" + " / " + 2*A);
+			String imaginary2 = ("(" + (-B) + " - i*sqrt(" + -determinant + "))" + " / " + 2*A);
 			System.out.print("\nThe roots are: \n" + imaginary1 + "\n" + imaginary2);
 		}
 
