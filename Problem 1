@@ -3,34 +3,64 @@ package problem1;
 import java.util.*;
 
 public class Problem1 {
+	
 
-	static int A = 0;
-	static int B = 0;
-	static int C = 0;
+	static int a = 0;
+	static int b = 0;
+	static int c = 0;
 	
 	static double p = 0.0;
 	static double q = 0.0;
 	private static Scanner sc;
 	
-	public static int test(Object value) {
-		if (value instanceof Integer) {
-			return 1;
+	public static boolean intTest(double value) {
+		String tempString = Double.toString(value);
+		if (tempString.charAt(tempString.length() - 1) == '0') {
+			return true;
 		}
 		else
-			return 0;
+			return false;
 	}
 	
-	public static boolean stupidTest(float x, float y, double a1, double b1, double c1) {
-		double rounder = Math.round(x*y);
-		System.out.print("\n" + (x+y));
-		System.out.print("\n" + -(b1/a1));
-		System.out.print("\n" + rounder);
-		System.out.print("\n" + (c1/a1));
+	public static boolean testForEquality(double p, double q, double A, double B, double C) {
+		double test1 = (p+q);
+		double test2 = -(B/A);
+		double test3 = (p*q);
+		double test4 = C/A;
 		
+		if (test3 - test4 < .1) {
+			test3 = test4;
+		}
 		
+		if (test1 - test2 < .1) {
+			test1 = test2;
+		}
 		
+		System.out.print("\n" + test1);
+		System.out.print("\n" + test2);
+		System.out.print("\n" + test3);
+		System.out.print("\n" + test4);
 		
-		if ((x+y == -(b1/a1)) & (rounder == c1/a1 )) {
+		if ((test1 == test2) & (test3 == test4)) {
+			return true;
+		}
+		
+		else
+			return false;
+	}
+	
+	public static boolean testForEqualityImaginary(double p, double q, double A, double B, double C) {
+		
+		double rounded = ((p*p)+(q*q))/2.00;
+		if (rounded - (C/A) < .1) {
+			rounded = (C/A);
+		}
+		System.out.print("\n" + (p+q));
+		System.out.print("\n" + -(B/A));
+		System.out.print("\n" + rounded);
+		System.out.print("\n" + (C/A));
+		
+		if ((p+q == -(B/A)) & (rounded == C/A )) {
 			return true;
 		}
 		
@@ -41,64 +71,78 @@ public class Problem1 {
 	public static void main(String[] args) {
 
 		sc = new Scanner(System.in);
-		System.out.print("Please enter the 'A' of your quadratic equation: ");
-		A = Integer.parseInt(sc.next());
+		System.out.print("Please enter the 'a' of your quadratic equation: ");
+		a = Integer.parseInt(sc.next());
 		
-		System.out.print("Please enter the 'B' of your quadratic equation: ");
-		B = Integer.parseInt(sc.next());
+		System.out.print("Please enter the 'b' of your quadratic equation: ");
+		b = Integer.parseInt(sc.next());
 				
-		System.out.print("Please enter the 'C' of your quadratic equation: ");
-		C = Integer.parseInt(sc.next());
+		System.out.print("Please enter the 'c' of your quadratic equation: ");
+		c = Integer.parseInt(sc.next());
 		
-		int determinant =  (B*B)-(4*A*C);
+		int determinant =  (b*b)-(4*a*c);
 		double determinantCheck = Math.sqrt(determinant);
 		
 		
 		if (determinant > 0) {
-			if(test(determinantCheck) == 1) {
-				p = (double) ((-B + Math.sqrt(determinant))/(2*A));
-				q = (double) ((-B - Math.sqrt(determinant))/(2*A));
-				System.out.print("\nThe roots are: " + p + " and " + q);
-			}
-			String test1 = (("(" + (-B) + " + sqrt(" + determinant + "))" + " / " + 2*A));
-			String test2 = ("(" + (-B) + " - sqrt(" + determinant + "))" + " / " + 2*A);
-			System.out.print("\nThe roots are: \n" + test1 + "\n" + test2);
-			float p1 = (float) ((-B + Math.sqrt(determinant))/(2*A));
-			float q1 = (float) ((-B - Math.sqrt(determinant))/(2*A));
 			
-			if (stupidTest(p1, q1, A, B, C) == true) {
-				System.out.print("\nThe quadratic equation and it's roots pass the equality tests or whatever.");
+			if (intTest(determinantCheck) == true) {
+				p = (double) ((-b + Math.sqrt(determinant))/(2*a));
+				q = (double) ((-b - Math.sqrt(determinant))/(2*a));
+				
+				System.out.print("\nThe roots are: " + p + " and " + q);
+				
+				if (testForEquality(p, q, a, b, c) == true) {
+					System.out.print("\nThe quadratic equation and its roots pass the equality tests!");
+				}
 			}
+			else {
+				p = (double) ((-b + Math.sqrt(determinant))/(2*a));
+				q = (double) ((-b - Math.sqrt(determinant))/(2*a));
+			String test1 = (("(" + (-b) + " + sqrt(" + determinant + "))" + " / " + 2*a));
+			String test2 = ("(" + (-b) + " - sqrt(" + determinant + "))" + " / " + 2*a);
+			System.out.print("\nThe roots are: \n" + test1 + "\n" + test2);
+			
+			if (testForEquality(p, q, a, b, c) == true) {
+				System.out.print("\nThe quadratic equation and its roots pass the equality tests!");
+			}
+			}
+			
+			
+			
 		}
 		
 
 		
 		
 		else if (determinant == 0) {
-			p = (int) ((-B)/(2*A));
+			
+			p = (int) ((-b)/(2*a));
+			q = p;
 			System.out.print("\nThe root is: " + p);
+			if(testForEquality(p, q, a, b, c) == true) {
+				System.out.print("\nThe quadratic equation and its roots pass the equality tests!");
+			}
 		}
 		
 		else {
-			String imaginary1 = ("(" + (-B) + " + i*sqrt(" + -determinant + "))" + " / " + 2*A);
-			String imaginary2 = ("(" + (-B) + " - i*sqrt(" + -determinant + "))" + " / " + 2*A);
+			
+			String imaginary1 = ("(" + (-b) + " + i*sqrt(" + -determinant + "))" + " / " + 2*a);
+			String imaginary2 = ("(" + (-b) + " - i*sqrt(" + -determinant + "))" + " / " + 2*a);
 			System.out.print("\nThe roots are: \n" + imaginary1 + "\n" + imaginary2);
 			
-			float p1 = (float) ((-B + Math.sqrt(determinant))/(2*A));
-			System.out.print(p1);
-			float q1 = (float) ((-B - Math.sqrt(determinant))/(2*A));
-			System.out.print(q1);
+			double p1 = (double) ((-b + Math.sqrt(-determinant))/(2*a));
+			//System.out.println("\n" + p1);
+			double q1 = (double) ((-b - Math.sqrt(-determinant))/(2*a));
+			//System.out.println(q1);
 			
-			int A1 = -B/(2*A);
-			int B1 = (int) (Math.sqrt(-1)*(Math.sqrt(-determinant)/(2*A)));
 			
-			//System.out.print((A1*A1) + (B1*B1)); 
-			
-			if (stupidTest(p1, q1, A, B, C) == true) {
-				System.out.print("\nThe quadratic equation and it's roots pass the equality tests or whatever.");
+			if (testForEqualityImaginary(p1, q1, a, b, c) == true) {
+				System.out.print("\nThe quadratic equation and its roots pass the equality tests!");
 			}
+
 		}
 
 	}
-
+	
 }
