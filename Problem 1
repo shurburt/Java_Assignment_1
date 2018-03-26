@@ -74,6 +74,11 @@ public class Problem1 {
 		System.out.print("Please enter the 'a' of your quadratic equation: ");
 		a = Integer.parseInt(sc.next());
 		
+		if (a == 0) {
+			System.out.print("This is not a quadratic equation, please restart the program and enter a valid 'a'.");
+			return;
+		}
+		
 		System.out.print("Please enter the 'b' of your quadratic equation: ");
 		b = Integer.parseInt(sc.next());
 				
