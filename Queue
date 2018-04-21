@@ -1,0 +1,217 @@
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
+
+public class Problem1 {
+	
+	// Change these to play around with the Queues
+	static int totalPeople = 50;     // Total people to be added to Queues A or B
+	static int maxNewPersonTime = 5; // Max time before a new person is added to Queue A or B
+	static int maxCheckerTime = 15;  // Max time before a checker finishes checking a person
+	
+	
+	
+	
+	
+	static Queue<Integer> queueA = new LinkedList<Integer>();
+	static Queue<Integer> queueB = new LinkedList<Integer>();
+	static Queue<Integer> queueC = new LinkedList<Integer>();
+	
+	static int checkerATime = 0;
+	static int checkerBTime = 0;
+	static int checkerCTime = 0;
+	static int waitTime = 0;
+	static boolean timerInProgress = false;
+	static boolean checkerAInProgress = false;
+	static boolean checkerBInProgress = false;
+	static boolean checkerCInProgress = false;
+
+	static long currentTime = 0;
+	static long sinceLastUpdate = 0;
+	static long startTime = System.currentTimeMillis()/1000;
+	static long timeElapsed = 0;
+	
+	public static void updateTime() {
+		currentTime = System.currentTimeMillis()/1000;
+	}
+	public static void checkTimeElapsed() {
+		timeElapsed = currentTime - startTime;
+	}
+	
+	public static boolean checkForQueue() {
+		Random rand = new Random();
+		int random = rand.nextInt(50);
+		if (random > 25) {
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	public static int checkForIndividualTime() {
+		Random rand = new Random();
+		int random = rand.nextInt(maxNewPersonTime) + 1;
+		return random;
+	}
+	
+	public static int checkForCheckerTimes() {
+		Random rand = new Random();
+		int random = rand.nextInt(maxCheckerTime) + 1;
+		return random;
+	}
+	
+	public static boolean timer(int x) {
+		
+		if (!timerInProgress) {
+			waitTime = x;
+			timerInProgress = true;
+		}
+		
+		if(waitTime == 0) {
+			timerInProgress = false;
+			return true;
+		}
+		
+		else waitTime--;
+			return false;
+	}
+	
+	public static boolean checkerA(int x) {
+		if (!checkerAInProgress) {
+			checkerATime = x;
+			checkerAInProgress = true;
+		}
+		
+		if(queueA.size() > (2/5)*totalPeople && (checkerATime - 3) > 0) {
+			checkerATime = checkerATime - 3;
+		}
+		
+		if(checkerATime == 0) {
+			checkerAInProgress = false;
+			return true;
+		}
+		
+		else checkerATime--;
+			return false;
+
+	}
+	
+	public static boolean checkerB(int x) {
+		if (!checkerBInProgress) {
+			checkerBTime = x;
+			checkerBInProgress = true;
+		}
+		
+		if(queueB.size() > (2/5)*totalPeople && (checkerBTime - 3) > 0) {
+			checkerBTime = checkerBTime - 3;
+		}
+		
+		if(checkerBTime == 0) {
+			checkerBInProgress = false;
+			return true;
+		}
+		
+		else checkerBTime--;
+			return false;
+
+	}
+	
+	public static boolean checkerC(int x) {
+		if (!checkerCInProgress) {
+			checkerCTime = x;
+			checkerCInProgress = true;
+		}
+		
+		if(queueC.size() > (2/5)*totalPeople && (checkerCTime - 3) > 0) {
+			checkerCTime = checkerCTime - 3;
+		}
+		
+		if(checkerCTime == 0) {
+			checkerCInProgress = false;
+			return true;
+		}
+		
+		else checkerCTime--;
+			return false;
+
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		
+		
+		int[] people = new int[totalPeople];
+		int counter = 0;
+		for(int i = 0; i < totalPeople; i++) {
+			people[i] = i+1;
+		}
+		boolean finished = false;
+		
+		int currentPerson = 0;
+		
+		while(!finished) {
+			
+			Problem1.updateTime();
+			long lastTimeCheck = timeElapsed;
+			Problem1.checkTimeElapsed();
+			int randomIntForPeople = checkForIndividualTime();
+			int randomIntForCheckerA = checkForCheckerTimes();
+			int randomIntForCheckerB = checkForCheckerTimes();
+			int randomIntForCheckerC = checkForCheckerTimes();
+			
+			if (lastTimeCheck != timeElapsed) {
+				counter++;
+			//System.out.println(timeElapsed);
+			// All code in this if-statement runs only once every second
+				
+				// Timer for adding people into Queue A and Queue B
+				if(timer(randomIntForPeople)) {
+					//System.out.println("Size of queue A: "+queueA.size());
+					if (Problem1.checkForQueue() && currentPerson != totalPeople) {
+						System.out.println("+ Person " + people[currentPerson] + " is now in Queue A...");
+						queueA.add(people[currentPerson]);
+						currentPerson++;
+						
+					}
+					else if (currentPerson != totalPeople) {
+						System.out.println("+ Person " + people[currentPerson] + " is now in Queue B...");
+						queueB.add(people[currentPerson]);
+						currentPerson++;
+					}
+				}
+				
+				if(checkerA(randomIntForCheckerA) && !queueA.isEmpty()) {
+					System.out.println("Person " + queueA.peek() + " is moving from Queue A to Queue C...");
+					queueC.add(queueA.remove());
+					
+				}
+				
+				if(checkerB(randomIntForCheckerB) && !queueB.isEmpty()) {
+					System.out.println("Person "+ queueB.peek() + " is moving from Queue B to Queue C...");
+					queueC.add(queueB.remove());
+					
+				}
+				
+				if(checkerC(randomIntForCheckerC) && !queueC.isEmpty()) {
+					System.out.println("- Person "+ queueC.peek() + " is exiting Queue C...");
+					queueC.remove();
+					
+				}
+				
+			}
+			
+			if(currentPerson == totalPeople && queueC.peek() == null) {
+				finished = true;
+			}
+	
+		}
+		
+		//System.out.println(counter);
+		System.out.println("Total Time Elapsed: " + counter + "minutes!");
+		//System.out.println("ALL DONE!!!");
+		
+	}
+
+}
