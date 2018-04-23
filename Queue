@@ -7,8 +7,9 @@ public class Problem1 {
 	
 	// Change these to play around with the Queues
 	static int totalPeople = 50;     // Total people to be added to Queues A or B
-	static int maxNewPersonTime = 5; // Max time before a new person is added to Queue A or B
+	static int maxNewPersonTime = 10; // Max time before a new person is added to Queue A or B
 	static int maxCheckerTime = 15;  // Max time before a checker finishes checking a person
+	static int percentageOfPeopleInQueueA = 50;
 	
 	
 	
@@ -41,8 +42,8 @@ public class Problem1 {
 	
 	public static boolean checkForQueue() {
 		Random rand = new Random();
-		int random = rand.nextInt(50);
-		if (random > 25) {
+		int random = rand.nextInt(100);
+		if (random > percentageOfPeopleInQueueA) {
 			return true;
 		}
 		else
@@ -207,9 +208,13 @@ public class Problem1 {
 			}
 	
 		}
+		System.out.println();
+		System.out.println("Percentage of People in Queue A: " + percentageOfPeopleInQueueA +"%");
+		System.out.println("Number of people: " + totalPeople);
+		System.out.println("Max Time Between New People: " + maxNewPersonTime);
+		System.out.println("Max Time Between Checking People: " + maxCheckerTime);
 		
-		//System.out.println(counter);
-		System.out.println("Total Time Elapsed: " + counter + "minutes!");
+		System.out.println("Total Time Elapsed: " + counter + " minutes!");
 		//System.out.println("ALL DONE!!!");
 		
 	}
