@@ -54,11 +54,11 @@ int main(){
     cout << "Max Image Value: " << maxValue << endl;
     
     // Read Pixel Data
-    int data[height][width][1];
+    int data[height][width];
     
     for (int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
-                dataFile >> data[i][j][0];
+                dataFile >> data[i][j];
         }
     }
     
@@ -70,7 +70,7 @@ int main(){
     
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
-                outputFile << data[i][j][0] << " ";
+                outputFile << data[i][j] << " ";
         }
     }
     
