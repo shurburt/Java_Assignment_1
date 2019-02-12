@@ -1,0 +1,80 @@
+#include<iostream>
+#include<fstream>
+#include<cstdlib>
+#include<string>
+
+using namespace std;
+
+int main(){
+    
+    string fileName;
+    fstream dataFile;
+    fstream outputFile;
+    
+    cout << "Welcome to the .pgma Image Reader!" << endl;
+    cout << "Please enter the file name (including extension): ";
+    
+    cin >> fileName;
+    string outputFileName = "output" + fileName;
+    
+    // Open image
+    dataFile.open(fileName);
+    if (!dataFile) {
+        cout << "\nFile does not exist" << endl;
+        return(-1);
+    }
+    
+    // Open image output
+    outputFile.open(outputFileName, fstream::out);
+    if (!outputFile) {
+        cout << "\nError opening output" << endl;
+        return(-2);
+    }
+    
+    string type;
+    string comment;
+    int width;
+    int height;
+    int maxValue;
+    
+    // Pull image info
+    getline(dataFile, type);
+    getline(dataFile, comment);
+    dataFile >> width >> height;
+    dataFile >> maxValue;
+    
+    if (type != "P2") {
+        cout << "Wrong file data" << endl;
+        return(-3);
+    }
+    
+    cout << "Image Type: " << type << endl;
+    cout << "Comment: " << comment << endl;
+    cout << "Image Dimensions: (" << width << ", " << height << ") " << endl;
+    cout << "Max Image Value: " << maxValue << endl;
+    
+    // Read Pixel Data
+    int data[height][width][1];
+    
+    for (int i = 0; i < height; i++) {
+        for(int j = 0; j < width; j++) {
+                dataFile >> data[i][j][0];
+        }
+    }
+    
+    // Write image info and data
+    outputFile << type << endl;
+    outputFile << comment << endl;
+    outputFile << width << " " << height << endl;
+    outputFile << maxValue << endl;
+    
+    for(int i = 0; i < height; i++) {
+        for(int j = 0; j < width; j++) {
+                outputFile << data[i][j][0] << " ";
+        }
+    }
+    
+    dataFile.close();
+    outputFile.close();
+    return 0;
+}
